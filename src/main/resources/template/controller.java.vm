@@ -1,0 +1,122 @@
+package ${package.Controller};
+    #set( $camelEntity = $!{cfg.StringUtils.uncapitalize("${table.entityName}")} )
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+    #if(${restControllerStyle})
+    import org.springframework.web.bind.annotation.RestController;
+    #else
+    import org.springframework.stereotype.Controller;
+    #end
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+    #if(${swagger2})
+    import io.swagger.annotations.Api;
+    import io.swagger.annotations.ApiOperation;
+    #end
+    #if(${superControllerClassPackage})
+    import ${superControllerClassPackage};
+    #end
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${table.entityName};
+
+/**
+ * $!{table.comment}管理 Controller
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+#if(${swagger2})
+@Api(value = "${entity}管理", tags = "$!{table.comment}管理")
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+
+private static Logger logger=LoggerFactory.getLogger(${table.controllerName}.class);
+
+@Autowired
+private ${table.serviceName} $!{cfg.StringUtils.uncapitalize("${table.serviceName}")};
+
+/**
+ * 分页列表
+ *
+ * @param page the page
+ * @param ${camelEntity} the ${camelEntity}
+ * @return the object
+ */
+@ApiOperation(value = "$!{table.comment}列表--分页", response = ${table.entityName}.class)
+@GetMapping(value = "/")
+public Object list(Page<${table.entityName}> page, ${table.entityName} ${camelEntity}){
+        Page<${table.entityName}> ${camelEntity}Page= ${camelEntity}Service.queryByPageWithAutoWrapper(${camelEntity},page);
+        return BaseResult.successResultCreate(${camelEntity}Page);
+        }
+
+/**
+ * 查询
+ *
+ * @param ${camelEntity}Id the ${camelEntity}
+ * @return the ${camelEntity}
+ */
+@ApiOperation(value = "$!{table.comment}信息")
+@GetMapping(value = "/get${table.entityName}")
+public Object get${table.entityName}(String ${camelEntity}Id){
+    ${table.entityName} ${camelEntity} = ${camelEntity}Service.getById(${camelEntity}Id);
+        return BaseResult.successResultCreate(${camelEntity});
+        }
+
+/**
+ * 新增
+ *
+ * @param ${camelEntity} the ${camelEntity}
+ * @return the object
+ */
+@ApiOperation(value = "新增$!{table.comment}信息", response = ${table.entityName}.class)
+@PostMapping(value = "/")
+public Object create(@RequestBody ${table.entityName} ${camelEntity}){
+        return BaseResult.successResultCreate(${camelEntity}Service.save(${camelEntity}));
+        }
+
+/**
+ * 删除
+ *
+ * @param ${camelEntity}Id the ${camelEntity}Id
+ * @return the object
+ */
+@ApiOperation(value = "删除$!{table.comment}信息")
+@DeleteMapping(value = "/delete")
+public Object delete(String ${camelEntity}Id){
+        int count= ${camelEntity}Service.remove(${camelEntity}Id);
+        return BaseResult.checkCountOneResult(count);
+        }
+
+/**
+ * 修改
+ *
+ * @param ${camelEntity} the ${camelEntity}
+ * @return the object
+ */
+@ApiOperation(value = "修改$!{table.comment}信息")
+@PutMapping(value = "/")
+public Object update(@RequestBody ${table.entityName} ${camelEntity}){
+        int count= ${camelEntity}Service.updateSelective(${camelEntity});
+        return BaseResult.checkCountOneResult(count);
+        }
+
+        }
+#else
+public class ${table.controllerName} {
+
+        }
+#end
