@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
  * @author WSQ
  * @since 2020-09-24
  */
-@SuppressWarnings(value = "unused")
 public class BaseModel implements Serializable {
 
     /**

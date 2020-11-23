@@ -11,4 +11,4 @@ import ${superMapperClassPackage};
  */
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
-        }
+}

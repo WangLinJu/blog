@@ -128,7 +128,6 @@ public class MybatisPlusGeneratorUtil {
         TemplateConfig tc = new TemplateConfig();
         tc.setEntity("template/entity.java.vm");
         tc.setMapper("template/mapper.java.vm");
-        tc.setXml("template/mapper.java.vm");
         tc.setService("template/service.java.vm");
         tc.setServiceImpl("template/serviceImpl.java.vm");
         tc.setController("template/controller.java.vm");

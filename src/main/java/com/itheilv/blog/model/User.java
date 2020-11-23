@@ -1,26 +1,35 @@
 package com.itheilv.blog.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.itheilv.blog.base.BaseModel;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
+ * 用户表
+ *
  * @author WSQ
- * @since 2020-10-30
+ * @since 2020-11-23
  */
-
 @TableName("user")
-@ApiModel(value = "User对象", description = "")
+@ApiModel(value = "User对象", description = "用户表")
 public class User extends BaseModel {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 昵称
+     */
     @TableField("nickname")
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "昵称")
     protected String nickname;
+
+    /**
+     * 密码
+     */
     @TableField("password")
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "密码")
     protected String password;
 
     public User() {
